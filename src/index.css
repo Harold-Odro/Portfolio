@@ -1,0 +1,188 @@
+@import "tailwindcss";
+
+/* Tailwind v4 Theme Configuration */
+@theme {
+  /* Modern Color Palette */
+  --color-primary: #2563eb;     /* Rich blue - primary brand color */
+  --color-primary-light: #3b82f6;
+  --color-primary-dark: #1d4ed8;
+  
+  --color-accent: #8b5cf6;      /* Purple - for accents and highlights */
+  --color-accent-light: #a78bfa;
+  
+  --color-neutral-50: #f8fafc;  /* Light background */
+  --color-neutral-100: #f1f5f9;
+  --color-neutral-200: #e2e8f0;
+  --color-neutral-700: #334155; /* Text color */
+  --color-neutral-800: #1e293b;
+  --color-neutral-900: #0f172a;
+  
+  /* Updated Gradient */
+  --gradient-primary: linear-gradient(135deg, 
+    var(--color-primary) 0%, 
+    var(--color-accent) 100%
+  );
+  
+  /* Modernized Shadow */
+  --shadow-glow: 0 8px 20px -3px rgba(37, 99, 235, 0.25),
+                 0 4px 6px -2px rgba(37, 99, 235, 0.05);
+}
+
+/* Custom Base Styles */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply antialiased text-neutral-800;
+    background-color: var(--color-neutral-50);
+  }
+
+  /* Modern scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--color-primary);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-primary-dark);
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-primary) transparent;
+  }
+}
+
+/* Custom Components */
+@layer components {
+  .btn-primary {
+    @apply px-6 py-3 text-white rounded-full
+           font-medium shadow-lg transition-all duration-300
+           active:scale-95;
+    background: var(--gradient-primary);
+    box-shadow: var(--shadow-glow);
+  }
+
+  .btn-secondary {
+    @apply px-6 py-3 border-2 border-neutral-200 text-neutral-700
+           rounded-full font-medium transition-colors duration-300
+           hover:border-primary hover:text-primary;
+  }
+
+  .utc-timestamp {
+    @apply font-mono text-sm text-gray-600 tracking-wider;
+  }
+
+  .user-display {
+    @apply font-sans text-sm text-gray-700 font-medium;
+  }
+
+  .section-title {
+    @apply text-4xl font-bold text-gray-900 leading-tight;
+  }
+
+  .gradient-text {
+    @apply text-transparent bg-clip-text;
+    background-image: var(--gradient-primary);
+  }
+
+  /* Date Time Format Example: 2025-03-24 11:17:51 */
+  .datetime-utc {
+    font-family: var(--font-family-mono);
+    letter-spacing: 0.5px;
+    @apply text-sm text-gray-600;
+  }
+
+  /* User Login Display Example: Harold-Odro */
+  .user-login {
+    @apply inline-flex items-center space-x-2 text-sm font-medium text-gray-700;
+  }
+
+  /* Loading Animation */
+  .loading-progress {
+    @apply h-1 bg-gradient-to-r from-[--color-primary] to-[--color-accent]
+           rounded-full overflow-hidden;
+    background: var(--gradient-primary);
+    background-size: 200% 200%;
+    animation: gradient-shift 2s linear infinite;
+  }
+
+  /* Loading Screen Specific Styles */
+  .loading-title {
+    @apply text-3xl sm:text-5xl font-bold mb-2 sm:mb-3;
+  }
+
+  .loading-subtitle {
+    @apply text-xl sm:text-2xl text-gray-400 font-light;
+  }
+
+  .progress-bar {
+    @apply relative h-1 w-full bg-gray-800 rounded-full overflow-hidden mb-3 sm:mb-4;
+  }
+
+  .progress-fill {
+    @apply absolute top-0 left-0 h-full bg-gradient-to-r from-[--color-primary] to-[--color-accent];
+    background: var(--gradient-primary);
+  }
+
+  .loading-dot {
+    @apply w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full;
+    background: var(--color-primary);
+  }
+}
+
+/* Custom Animations */
+@layer utilities {
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.5);
+      opacity: 1;
+    }
+  }
+
+  .animate-gradient-shift {
+    animation: gradient-shift 2s linear infinite;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  .animate-pulse-dot {
+    animation: pulse-dot 1s ease-in-out infinite;
+  }
+}
