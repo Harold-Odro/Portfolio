@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '../hooks/useWindowSize';
 
 const LoadingPage = ({ onLoadComplete }) => {
   const [progress, setProgress] = useState(0);
   const [currentDateTime, setCurrentDateTime] = useState('');
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
+  const isMobile = useIsMobile();
 
   // Update current date and time
   useEffect(() => {
@@ -22,17 +22,6 @@ const LoadingPage = ({ onLoadComplete }) => {
 
     return () => clearInterval(interval);
   }, []);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 768;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -152,6 +141,10 @@ const LoadingPage = ({ onLoadComplete }) => {
       </motion.div>
     </motion.div>
   );
+};
+
+LoadingPage.propTypes = {
+  onLoadComplete: PropTypes.func.isRequired,
 };
 
 export default LoadingPage;

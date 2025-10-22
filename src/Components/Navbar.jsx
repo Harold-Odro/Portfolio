@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const currentTime = "2025-03-26 10:35:17";
-  const currentUser = "Harold-Odro";
 
   // Handle scroll effect
   useEffect(() => {

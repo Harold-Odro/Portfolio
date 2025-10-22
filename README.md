@@ -1,12 +1,81 @@
-# React + Vite
+# Harold Odro's Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, responsive portfolio website showcasing web development and data analysis projects.
 
-Currently, two official plugins are available:
+## 🚀 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Modern React 19 with Vite
+- Smooth animations with Framer Motion
+- Responsive design with Tailwind CSS 4
+- Custom text effects (DecryptedText, RotatingText)
+- Optimized performance with shared hooks
+- ESLint configured for code quality
 
-## Expanding the ESLint configuration
+## 🛠️ Technologies
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **Frontend**: React 19, Vite 7
+- **Styling**: Tailwind CSS 4
+- **Animations**: Framer Motion
+- **Routing**: React Router DOM
+- **Linting**: ESLint 9
+
+## 📦 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/Harold-Odro/portfolio.git
+
+# Navigate to project directory
+cd portfolio
+
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 🧪 Development
+
+```bash
+# Run linter
+npm run lint
+
+# Build project
+npm run build
+```
+
+## 📁 Project Structure
+
+```
+portfolio/
+├── src/
+│   ├── Components/       # Reusable React components
+│   ├── hooks/           # Custom React hooks
+│   ├── pages/           # Page components
+│   ├── assets/          # Images and static assets
+│   └── index.css        # Global styles
+├── public/              # Public assets
+└── dist/                # Production build
+```
+
+## 🔧 Custom Hooks
+
+- `useWindowSize()` - Track window dimensions
+- `useIsMobile()` - Responsive breakpoint detection
+
+## 📝 License
+
+© 2025 Harold Odro. All rights reserved.
+
+## 📫 Contact
+
+- **Email**: harodro@gmail.com
+- **LinkedIn**: [harold-odro](https://linkedin.com/in/harold-odro)
+- **GitHub**: [Harold-Odro](https://github.com/Harold-Odro)

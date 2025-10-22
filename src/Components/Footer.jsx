@@ -1,9 +1,6 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 
 export default function Footer() {
-  const currentDate = "2025-03-26 00:47:01";
-  const currentUser = "Harold-Odro";
 
   const socialLinks = [
     {

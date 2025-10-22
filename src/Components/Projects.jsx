@@ -1,28 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { motion } from 'framer-motion';
 import DecryptedText from './DecryptedText';
 import { useLocation } from 'react-router-dom';
+import { useIsMobile } from '../hooks/useWindowSize';
 
 const Projects = () => {
   const location = useLocation();
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
-
-  // Current time and user info
-  const currentTime = "2025-03-26 10:22:21";
-  const currentUser = "Harold-Odro";
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 768;
+  const isMobile = useIsMobile();
 
   // Categorized projects
   const projectsByCategory = {

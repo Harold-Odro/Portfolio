@@ -1,25 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import RotatingText from './RotatingText';
 import DecryptedText from './DecryptedText';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '../hooks/useWindowSize';
 
 export default function HeroSection() {
-  const [windowWidth, setWindowWidth] = useState(
-    typeof window !== 'undefined' ? window.innerWidth : 0
-  );
-
-
-
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  const isMobile = windowWidth < 768;
+  const isMobile = useIsMobile();
 
   const handleMailto = () => {
     const subject = encodeURIComponent("Portfolio Contact");
@@ -34,15 +19,7 @@ export default function HeroSection() {
       transition={{ duration: isMobile ? 1.0 : 2.0, ease: "easeInOut" }}
       className="relative h-screen bg-gradient-to-b from-gray-900 to-black"
     >
-      {/* Status Bar - Only show on mobile */}
-      {isMobile && (
-        <div className="absolute top-0 left-0 right-0 z-50 px-4 py-2 bg-black/50 backdrop-blur-sm">
-          <div className="flex justify-between items-center text-gray-400 text-xs">
-            <span className="font-mono">{currentTime}</span>
-            <span className="font-medium">{currentUser}</span>
-          </div>
-        </div>
-      )}
+      {/* Status Bar removed - no longer needed */}
 
       {/* Background image with improved overlay */}
       <div className="absolute inset-0 z-0">

@@ -1,39 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { useIsMobile } from '../hooks/useWindowSize';
 
 export default function AboutSection() {
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(false);
-
-
-  // Window size hook
-  const useWindowSize = () => {
-    const [windowSize, setWindowSize] = useState({
-      width: typeof window !== 'undefined' ? window.innerWidth : 0,
-      height: typeof window !== 'undefined' ? window.innerHeight : 0,
-    });
-
-    useEffect(() => {
-      const handleResize = () => {
-        setWindowSize({
-          width: window.innerWidth,
-          height: window.innerHeight,
-        });
-      };
-
-      window.addEventListener('resize', handleResize);
-      handleResize();
-
-      return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
-    return windowSize;
-  };
-
-  const { width } = useWindowSize();
-  const isMobile = width < 768;
+  const isMobile = useIsMobile();
   const animationDuration = isMobile ? 0.5 : 0.8;
 
   const skillCards = [

@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import Homepage from './pages/Homepage'
 import LoadingPage from './Components/LoadingPage'
-import './index.css'
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
