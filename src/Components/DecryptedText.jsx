@@ -1,5 +1,6 @@
-import { useEffect, useState, useRef } from 'react'
+import { useEffect, useState, useRef, useMemo, memo } from 'react'
 import { motion } from 'framer-motion'
+import PropTypes from 'prop-types'
 
 /**
  * DecryptedText
@@ -17,7 +18,7 @@ import { motion } from 'framer-motion'
  * - parentClassName?: string    (applied to the top-level span container)
  * - animateOn?: "view" | "hover"  (default: "hover")
  */
-export default function DecryptedText({
+const DecryptedText = memo(function DecryptedText({
   text,
   speed = 50,
   maxIterations = 10,
@@ -37,6 +38,13 @@ export default function DecryptedText({
   const [revealedIndices, setRevealedIndices] = useState(new Set())
   const [hasAnimated, setHasAnimated] = useState(false)
   const containerRef = useRef(null)
+
+  // Memoize available characters to prevent stale closures
+  const availableChars = useMemo(() => {
+    return useOriginalCharsOnly
+      ? Array.from(new Set(text.split(''))).filter((char) => char !== ' ')
+      : characters.split('')
+  }, [useOriginalCharsOnly, text, characters])
 
   useEffect(() => {
     let interval
@@ -69,10 +77,6 @@ export default function DecryptedText({
           return revealedSet.size
       }
     }
-
-    const availableChars = useOriginalCharsOnly
-      ? Array.from(new Set(text.split(''))).filter((char) => char !== ' ')
-      : characters.split('')
 
     const shuffleText = (originalText, currentRevealed) => {
       if (useOriginalCharsOnly) {
@@ -223,4 +227,20 @@ export default function DecryptedText({
       </span>
     </motion.span>
   )
-}
+});
+
+DecryptedText.propTypes = {
+  text: PropTypes.string.isRequired,
+  speed: PropTypes.number,
+  maxIterations: PropTypes.number,
+  sequential: PropTypes.bool,
+  revealDirection: PropTypes.oneOf(['start', 'end', 'center']),
+  useOriginalCharsOnly: PropTypes.bool,
+  characters: PropTypes.string,
+  className: PropTypes.string,
+  encryptedClassName: PropTypes.string,
+  parentClassName: PropTypes.string,
+  animateOn: PropTypes.oneOf(['view', 'hover']),
+};
+
+export default DecryptedText;

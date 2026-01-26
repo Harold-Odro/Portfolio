@@ -1,19 +1,46 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-  // Handle scroll effect
+  // Handle scroll effect with passive listener for better performance
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Handle About link click - scrolls to section or navigates home first
+  const handleAboutClick = useCallback((e) => {
+    e.preventDefault();
+    setIsMenuOpen(false);
+
+    if (location.pathname === '/') {
+      // Already on homepage, just scroll
+      const aboutSection = document.getElementById('about');
+      if (aboutSection) {
+        aboutSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    } else {
+      // Navigate to homepage, then scroll after a brief delay
+      navigate('/');
+      setTimeout(() => {
+        const aboutSection = document.getElementById('about');
+        if (aboutSection) {
+          aboutSection.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  }, [location.pathname, navigate]);
 
   const menuVariants = {
     closed: {
@@ -46,18 +73,22 @@ export default function Navbar() {
         <div className="container mx-auto px-4 md:px-6 py-4">
           <div className="flex justify-between items-center">
             {/* Logo */}
-            <div className="text-xl md:text-2xl font-bold text-white">
+            <Link to="/" className="text-xl md:text-2xl font-bold text-white hover:text-accent-blue transition-colors duration-300">
               HAROLD ODRO
-            </div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-6">
-              <a href="#about" className="text-white hover:text-accent-blue transition-colors duration-300">
+              <a
+                href="#about"
+                onClick={handleAboutClick}
+                className="text-white hover:text-accent-blue transition-colors duration-300 cursor-pointer"
+              >
                 About
               </a>
-              <a href="#projects" className="text-white hover:text-accent-blue transition-colors duration-300">
+              <Link to="/projects" className="text-white hover:text-accent-blue transition-colors duration-300">
                 Projects
-              </a>
+              </Link>
 
               {/* Social Icons */}
               <a
@@ -154,18 +185,18 @@ export default function Navbar() {
                   <div className="flex flex-col space-y-4 px-4">
                     <a
                       href="#about"
-                      className="text-white hover:text-accent-blue transition-colors duration-300 py-2"
-                      onClick={() => setIsMenuOpen(false)}
+                      onClick={handleAboutClick}
+                      className="text-white hover:text-accent-blue transition-colors duration-300 py-2 cursor-pointer"
                     >
                       About
                     </a>
-                    <a
-                      href="#projects"
+                    <Link
+                      to="/projects"
                       className="text-white hover:text-accent-blue transition-colors duration-300 py-2"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Projects
-                    </a>
+                    </Link>
                   </div>
                 </div>
 
@@ -204,3 +235,6 @@ export default function Navbar() {
     </>
   );
 }
+
+// Navbar has no props, but we document it for consistency
+Navbar.propTypes = {};

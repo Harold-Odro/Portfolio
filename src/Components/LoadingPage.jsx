@@ -24,17 +24,22 @@ const LoadingPage = ({ onLoadComplete }) => {
   }, []);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    let timer1, timer2;
+
+    timer1 = setTimeout(() => {
       if (progress < 100) {
         setProgress(prev => Math.min(prev + Math.random() * 15, 100));
       } else {
-        setTimeout(() => {
+        timer2 = setTimeout(() => {
           onLoadComplete();
         }, 1000);
       }
     }, 150);
 
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer1);
+      if (timer2) clearTimeout(timer2);
+    };
   }, [progress, onLoadComplete]);
 
   return (

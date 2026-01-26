@@ -1,12 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { useIsMobile } from '../hooks/useWindowSize';
+import PropTypes from 'prop-types';
 
 export default function AboutSection() {
   const navigate = useNavigate();
   const [isDownloading, setIsDownloading] = useState(false);
   const [downloadError, setDownloadError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
   const isMobile = useIsMobile();
   const animationDuration = isMobile ? 0.5 : 0.8;
 
@@ -14,7 +17,7 @@ export default function AboutSection() {
     {
       category: "Web Development",
       description: "Full-stack development with modern frameworks",
-      technologies: ["React", "Laravel", "Node.js"],
+      technologies: ["React", "Laravel", "Node.js", "Tailwind CSS"],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -23,57 +26,62 @@ export default function AboutSection() {
       projectSection: "web-projects"
     },
     {
-      category: "Data Analysis",
-      description: "Transforming data into actionable insights",
-      technologies: ["Python", "SQL", "Tableau"],
+      category: "Python Development",
+      description: "Automation, scripting, and data processing",
+      technologies: ["Python", "Pandas", "NumPy", "Flask"],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      projectSection: "data-projects"
+      projectSection: "python-projects"
+    },
+    {
+      category: "Database & SQL",
+      description: "Database design, optimization, and analytics",
+      technologies: ["MySQL", "PostgreSQL", "SQLite", "MongoDB"],
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
+        </svg>
+      ),
+      projectSection: "sql-projects"
     }
   ];
 
-  const handleDownloadCV = async () => {
+  // Memoize download handler to prevent recreation on every render
+  const handleDownloadCV = useCallback(() => {
     try {
       setIsDownloading(true);
       setDownloadError(false);
 
-      const cvUrl = '/files/Harold_Odro_CV.pdf';
-      const response = await fetch(cvUrl);
-
-      if (!response.ok) {
-        throw new Error('Failed to download CV');
-      }
-
-      const blob = await response.blob();
-      const downloadUrl = window.URL.createObjectURL(blob);
+      // Simple approach: use native browser download
       const link = document.createElement('a');
-      link.href = downloadUrl;
+      link.href = '/files/Harold_Odro_CV.pdf';
       link.download = 'Harold-Odro-CV.pdf';
-
-      document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
-      window.URL.revokeObjectURL(downloadUrl);
+
+      // Reset loading state after a short delay
+      setTimeout(() => {
+        setIsDownloading(false);
+      }, 1000);
     } catch (error) {
       console.error('Error downloading CV:', error);
       setDownloadError(true);
-      setTimeout(() => setDownloadError(false), 3000);
-    } finally {
       setIsDownloading(false);
+      setTimeout(() => setDownloadError(false), 3000);
     }
-  };
+  }, []);
 
-  const handleCardClick = (projectSection) => {
+  // Memoize card click handler
+  const handleCardClick = useCallback((projectSection) => {
     navigate('/projects', {
       state: {
         section: projectSection,
         fromSkills: true
       }
     });
-  };
+  }, [navigate]);
 
   // Mobile scroll behavior
   useEffect(() => {
@@ -109,22 +117,37 @@ export default function AboutSection() {
                 <motion.div
                   whileHover={{ scale: isMobile ? 1 : 1.05 }}
                   transition={{ duration: 0.3 }}
+                  className="relative"
                 >
+                  {/* Loading skeleton */}
+                  {!imageLoaded && !imageError && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 animate-pulse rounded-2xl" />
+                  )}
+
+                  {/* Actual image */}
                   <img
                     src="/images/about-img-1.jpg"
-                    alt="Professional Development"
-                    className="w-full h-48 md:h-72 object-cover rounded-2xl shadow-lg"
+                    alt="Professional web development workspace"
+                    className={`w-full h-48 md:h-72 object-cover rounded-2xl shadow-lg transition-opacity duration-300 ${
+                      imageLoaded ? 'opacity-100' : 'opacity-0'
+                    }`}
+                    loading="lazy"
+                    decoding="async"
+                    onLoad={() => setImageLoaded(true)}
+                    onError={() => setImageError(true)}
                   />
-                </motion.div>
-                <motion.div
-                  whileHover={{ scale: isMobile ? 1 : 1.05 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  <img
-                    src="/images/about-img-2.jpg"
-                    alt="Data Analysis"
-                    className="w-full h-48 md:h-72 object-cover rounded-2xl shadow-lg mt-0 sm:mt-6"
-                  />
+
+                  {/* Error fallback */}
+                  {imageError && (
+                    <div className="absolute inset-0 bg-gray-800 rounded-2xl flex items-center justify-center">
+                      <div className="text-center text-gray-500">
+                        <svg className="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                        </svg>
+                        <p className="text-sm">Image unavailable</p>
+                      </div>
+                    </div>
+                  )}
                 </motion.div>
               </div>
               {/* Decorative Elements */}
@@ -149,19 +172,19 @@ export default function AboutSection() {
               <h2 className="text-2xl md:text-4xl font-bold text-gray-400 leading-tight">
                 Crafting Digital Excellence Through{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                  Code & Data
+                  Code & Innovation
                 </span>
               </h2>
 
               <p className="text-sm md:text-base text-gray-400 leading-relaxed">
-                As a passionate developer and data analyst, I blend technical expertise with creative
+                As a passionate web developer, I blend technical expertise with creative
                 problem-solving to build exceptional digital experiences. My approach combines modern
-                web development technologies with data-driven insights to create solutions that make
+                web development technologies and best practices to create solutions that make
                 a real impact.
               </p>
 
               {/* Skills Section with Cards */}
-              <div className="grid grid-cols-1 gap-6 md:gap-8 mt-8 md:mt-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
                 {skillCards.map((card, index) => (
                   <motion.div
                     key={card.category}
@@ -321,3 +344,6 @@ export default function AboutSection() {
     </section>
   );
 }
+
+// AboutSection has no props, but we document it for consistency
+AboutSection.propTypes = {};

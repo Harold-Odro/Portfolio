@@ -2,15 +2,17 @@ import RotatingText from './RotatingText';
 import DecryptedText from './DecryptedText';
 import { motion } from 'framer-motion';
 import { useIsMobile } from '../hooks/useWindowSize';
+import PropTypes from 'prop-types';
 
 export default function HeroSection() {
   const isMobile = useIsMobile();
 
-  const handleMailto = () => {
+  // Use semantic HTML for mailto instead of JavaScript
+  const mailtoLink = (() => {
     const subject = encodeURIComponent("Portfolio Contact");
     const body = encodeURIComponent("Hello Harold,\n\n");
-    window.location.href = `mailto:harodro@gmail.com?subject=${subject}&body=${body}`;
-  };
+    return `mailto:harodro@gmail.com?subject=${subject}&body=${body}`;
+  })();
 
   return (
     <motion.section
@@ -107,9 +109,10 @@ export default function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: isMobile ? 0.5 : 0.8, delay: isMobile ? 1.0 : 1.4 }}
           >
-            <button
-              onClick={handleMailto}
-              className="group relative px-6 md:px-8 py-3 md:py-4 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-300 overflow-hidden w-full sm:w-auto"
+            <a
+              href={mailtoLink}
+              aria-label="Send email to Harold Odro"
+              className="group relative px-6 md:px-8 py-3 md:py-4 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-300 overflow-hidden w-full sm:w-auto inline-block"
             >
               <span className="relative z-10 flex items-center justify-center space-x-2">
                 <span className="text-sm md:text-base">Contact Me</span>
@@ -119,6 +122,7 @@ export default function HeroSection() {
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -129,7 +133,7 @@ export default function HeroSection() {
                 </svg>
               </span>
               <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-            </button>
+            </a>
           </motion.div>
         </motion.div>
       </div>
@@ -144,3 +148,6 @@ export default function HeroSection() {
     </motion.section>
   );
 }
+
+// HeroSection has no props, but we document it for consistency
+HeroSection.propTypes = {};

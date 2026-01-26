@@ -1,44 +1,18 @@
 import { useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Link, useLocation } from 'react-router-dom';
 import DecryptedText from './DecryptedText';
-import { useLocation } from 'react-router-dom';
+import { projectsData } from '../data/projects';
 import { useIsMobile } from '../hooks/useWindowSize';
 
 const Projects = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
 
-  // Categorized projects
-  const projectsByCategory = {
-    'web-projects': [
-      {
-        title: "Portfolio Website",
-        description: "Personal portfolio website with modern animations and effects",
-        tags: ["React", "Tailwind CSS", "Framer Motion"],
-        image: "/images/portfolio.png",
-        link: "https://github.com/Harold-Odro/portfolio",
-        category: "Web Development"
-      },
-      {
-        title: "Movie Tracker Website",
-        description: "Website that displays movie information using the TMDB API",
-        tags: ["React", "Tailwind CSS", "Framer Motion"],
-        image: "/images/movietracker.png",
-        link: "https://movietracker.fly.dev",
-        category: "Web Development"
-      }
-    ],
-    'data-projects': [
-      {
-        title: "Data Analytics Dashboards",
-        description: "Interactive dashboard for visualizing complex datasets with real-time updates",
-        tags: ["React", "D3.js", "Python", "FastAPI"],
-        image: "/images/dashboard.jpg",
-        link: "https://public.tableau.com/app/profile/harold.odro/vizzes",
-        category: "Data Analysis"
-      }
-    ],
-  };
+  // Use projects from data file - limit to 2 featured projects per category
+  const projectsByCategory = Object.fromEntries(
+    Object.entries(projectsData).map(([key, projects]) => [key, projects.slice(0, 2)])
+  );
 
   // Scroll to specific section when navigating from skills
   useEffect(() => {
@@ -85,13 +59,19 @@ const Projects = () => {
       viewport={{ once: true }}
       className="group relative"
     >
-      <div className="relative overflow-hidden rounded-lg bg-white/10 backdrop-blur-sm">
+      <a
+        href={project.link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block relative overflow-hidden rounded-lg bg-white/10 backdrop-blur-sm cursor-pointer">
         {/* Project Image - Reduced height */}
         <div className="relative h-40 md:h-48 overflow-hidden">
           <img
             src={project.image}
-            alt={project.title}
+            alt={`${project.title} - ${project.description}`}
             className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
         </div>
@@ -118,12 +98,7 @@ const Projects = () => {
           </div>
 
           {/* View Project Link - Reduced size */}
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group inline-flex items-center space-x-1.5 text-accent-blue hover:text-accent-blue-light transition-colors duration-300"
-          >
+          <span className="inline-flex items-center space-x-1.5 text-accent-blue group-hover:text-accent-blue-light transition-colors duration-300">
             <span className="text-xs md:text-sm">View Project</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -131,6 +106,7 @@ const Projects = () => {
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -139,12 +115,12 @@ const Projects = () => {
                 d="M17 8l4 4m0 0l-4 4m4-4H3"
               />
             </svg>
-          </a>
+          </span>
         </div>
 
         {/* Hover Overlay */}
         <div className="absolute inset-0 bg-gradient-to-r from-accent-blue/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none" />
-      </div>
+      </a>
     </motion.div>
   ))}
 </div>
@@ -194,10 +170,8 @@ const Projects = () => {
           viewport={{ once: true }}
           className="mt-12 md:mt-16 text-center"
         >
-          <a
-            href="https://github.com/Harold-Odro"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/projects"
             className="group relative px-6 md:px-8 py-3 md:py-4 bg-white/10 backdrop-blur-sm rounded-lg hover:bg-white/20 transition-all duration-300 overflow-hidden inline-flex items-center space-x-2 text-sm md:text-base"
           >
             <span className="relative z-10">View All Projects</span>
@@ -216,7 +190,7 @@ const Projects = () => {
               />
             </svg>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

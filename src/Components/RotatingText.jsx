@@ -1,5 +1,3 @@
-"use client";
-
 import {
   forwardRef,
   useCallback,
@@ -7,14 +5,16 @@ import {
   useImperativeHandle,
   useMemo,
   useState,
+  memo,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import PropTypes from "prop-types";
 
 function cn(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-const RotatingText = forwardRef((props, ref) => {
+const RotatingText = memo(forwardRef((props, ref) => {
   const {
     texts,
     transition = { type: "spring", damping: 25, stiffness: 300 },
@@ -212,7 +212,28 @@ const RotatingText = forwardRef((props, ref) => {
       </AnimatePresence>
     </motion.span>
   );
-});
+}));
 
 RotatingText.displayName = "RotatingText";
+
+RotatingText.propTypes = {
+  texts: PropTypes.arrayOf(PropTypes.string).isRequired,
+  transition: PropTypes.object,
+  initial: PropTypes.object,
+  animate: PropTypes.object,
+  exit: PropTypes.object,
+  animatePresenceMode: PropTypes.string,
+  animatePresenceInitial: PropTypes.bool,
+  rotationInterval: PropTypes.number,
+  staggerDuration: PropTypes.number,
+  staggerFrom: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  loop: PropTypes.bool,
+  auto: PropTypes.bool,
+  splitBy: PropTypes.string,
+  onNext: PropTypes.func,
+  mainClassName: PropTypes.string,
+  splitLevelClassName: PropTypes.string,
+  elementLevelClassName: PropTypes.string,
+};
+
 export default RotatingText;

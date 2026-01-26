@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BREAKPOINTS } from '../utils/constants';
 
 export function useWindowSize() {
   const [windowSize, setWindowSize] = useState({
@@ -23,7 +24,7 @@ export function useWindowSize() {
   return windowSize;
 }
 
-export function useIsMobile(breakpoint = 768) {
+export function useIsMobile(breakpoint = BREAKPOINTS.mobile) {
   const { width } = useWindowSize();
   return width < breakpoint;
 }

@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import PropTypes from 'prop-types';
 
 export default function Footer() {
 
@@ -144,3 +145,6 @@ export default function Footer() {
     </footer>
   );
 }
+
+// Footer has no props, but we document it for consistency
+Footer.propTypes = {};
