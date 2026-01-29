@@ -162,6 +162,7 @@ const DecryptedText = memo(function DecryptedText({
     revealDirection,
     characters,
     useOriginalCharsOnly,
+    availableChars,
   ])
 
   useEffect(() => {

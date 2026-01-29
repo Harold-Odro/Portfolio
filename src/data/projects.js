@@ -23,6 +23,14 @@ export const projectsData = {
       image: "/images/movietracker.png",
       link: "https://movietracker.fly.dev",
       category: "Web Development"
+    },
+    {
+      title: "Accra Rentals",
+      description: "Property rental platform for finding apartments and homes in Accra",
+      tags: ["Next.js", "Vercel", "Real Estate"],
+      image: "/images/accra-tracker.png",
+      link: "https://accra-rentals.vercel.app/",
+      category: "Web Development"
     }
   ],
 };

@@ -94,7 +94,7 @@ export default function AboutSection() {
   }, [isMobile]);
 
   return (
-    <section id="about" className="py-12 md:py-24 bg-gradient-to-b from-black to-gray-900">
+    <section id="about" className="py-10 sm:py-16 md:py-20 lg:py-24 bg-gradient-to-b from-black to-gray-900">
 
       <motion.div
         className="container mx-auto px-4 md:px-6"
@@ -103,7 +103,7 @@ export default function AboutSection() {
         transition={{ duration: animationDuration }}
         viewport={{ once: true }}
       >
-        <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
+        <div className="flex flex-col md:flex-row items-center gap-6 sm:gap-8 md:gap-10 lg:gap-12">
           {/* Image Grid Section */}
           <motion.div
             className="w-full md:w-1/2"
@@ -165,18 +165,18 @@ export default function AboutSection() {
             viewport={{ once: true }}
           >
             <div className="space-y-4 md:space-y-6">
-              <div className="inline-block px-3 md:px-4 py-1 md:py-2 bg-blue-50 rounded-full">
-                <h3 className="text-blue-600 text-xs md:text-sm font-semibold tracking-wider">ABOUT ME</h3>
+              <div className="inline-block px-3 sm:px-3.5 md:px-4 py-1.5 sm:py-1.5 md:py-2 bg-blue-50 rounded-full">
+                <h3 className="text-blue-600 text-xs sm:text-xs md:text-sm font-semibold tracking-wider">ABOUT ME</h3>
               </div>
 
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-400 leading-tight">
+              <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold text-gray-400 leading-tight">
                 Crafting Digital Excellence Through{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
                   Code & Innovation
                 </span>
               </h2>
 
-              <p className="text-sm md:text-base text-gray-400 leading-relaxed">
+              <p className="text-xs sm:text-sm md:text-base text-gray-400 leading-relaxed">
                 As a passionate web developer, I blend technical expertise with creative
                 problem-solving to build exceptional digital experiences. My approach combines modern
                 web development technologies and best practices to create solutions that make
@@ -184,11 +184,11 @@ export default function AboutSection() {
               </p>
 
               {/* Skills Section with Cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-12">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5 lg:gap-6 mt-6 sm:mt-8 md:mt-10 lg:mt-12">
                 {skillCards.map((card, index) => (
                   <motion.div
                     key={card.category}
-                    className="group relative overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm p-4 md:p-6 cursor-pointer"
+                    className="group relative overflow-hidden rounded-xl bg-white/5 backdrop-blur-sm p-3 sm:p-4 md:p-5 lg:p-6 cursor-pointer"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: index * (isMobile ? 0.05 : 0.1) }}
@@ -211,22 +211,22 @@ export default function AboutSection() {
                       </motion.div>
 
                       <motion.h3
-                        className="text-lg md:text-xl font-semibold text-white mb-2"
+                        className="text-base sm:text-lg md:text-xl font-semibold text-white mb-2"
                         whileHover={{ x: isMobile ? 0 : 5 }}
                         transition={{ duration: 0.2 }}
                       >
                         {card.category}
                       </motion.h3>
 
-                      <p className="text-xs md:text-sm text-gray-400 mb-4">
+                      <p className="text-xs sm:text-xs md:text-sm text-gray-400 mb-3 sm:mb-4">
                         {card.description}
                       </p>
 
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {card.technologies.map((tech) => (
                           <motion.span
                             key={tech}
-                            className="px-2 py-1 text-xs rounded-md bg-white/10 text-gray-300"
+                            className="px-1.5 sm:px-2 py-0.5 sm:py-1 text-[10px] sm:text-xs rounded-md bg-white/10 text-gray-300"
                             whileHover={{
                               scale: isMobile ? 1 : 1.05,
                               backgroundColor: "rgba(255, 255, 255, 0.2)"
@@ -264,14 +264,14 @@ export default function AboutSection() {
               </div>
 
               {/* CTA Button */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-4 relative w-full sm:w-auto">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 pt-3 sm:pt-4 relative w-full sm:w-auto">
                 <motion.button
                   onClick={handleDownloadCV}
                   disabled={isDownloading}
                   whileHover={{ scale: isDownloading || isMobile ? 1 : 1.05 }}
                   whileTap={{ scale: isDownloading || isMobile ? 1 : 0.95 }}
                   className={`
-                    px-4 py-2 md:px-6 md:py-3
+                    px-4 py-2.5 sm:px-5 sm:py-2.5 md:px-6 md:py-3
                     w-full sm:w-auto
                     bg-gradient-to-r from-blue-600 to-purple-600
                     text-white rounded-lg font-medium

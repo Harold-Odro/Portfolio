@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import ErrorBoundary from './Components/ErrorBoundary'
 import LoadingPage from './Components/LoadingPage'
+import ScrollRestoration from './Components/ScrollRestoration'
 
 // Error fallback component for failed lazy loads
 const LazyLoadError = () => (
@@ -52,6 +53,7 @@ function App() {
   return (
     <ErrorBoundary>
       <Router>
+        <ScrollRestoration />
         {/* Skip to content link for accessibility */}
         <a
           href="#main-content"
