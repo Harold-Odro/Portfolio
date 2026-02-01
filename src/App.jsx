@@ -48,6 +48,12 @@ const ProjectsPage = lazy(() =>
   }))
 );
 
+const ProjectDetail = lazy(() =>
+  import('./pages/ProjectDetail').catch(() => ({
+    default: LazyLoadError
+  }))
+);
+
 
 function App() {
   return (
@@ -65,6 +71,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Homepage />} />
             <Route path="/projects" element={<ProjectsPage />} />
+            <Route path="/projects/:slug" element={<ProjectDetail />} />
           </Routes>
         </Suspense>
       </Router>

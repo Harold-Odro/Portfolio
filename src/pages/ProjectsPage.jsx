@@ -99,10 +99,8 @@ export default function ProjectsPage() {
               }}
               className="group relative"
             >
-              <a
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
+              <Link
+              to={`/projects/${project.slug}`}
               className="block relative overflow-hidden rounded-lg bg-white/10 backdrop-blur-sm h-full flex flex-col cursor-pointer">
                 {/* Project Image */}
                 <div className="relative h-40 sm:h-44 md:h-48 lg:h-56 overflow-hidden">
@@ -144,9 +142,9 @@ export default function ProjectsPage() {
                     ))}
                   </div>
 
-                  {/* View Project Link */}
+                  {/* View Details Link */}
                   <span className="inline-flex items-center space-x-1.5 sm:space-x-2 text-accent-blue group-hover:text-accent-blue-light transition-colors duration-300 text-xs sm:text-sm md:text-base">
-                    <span>View Project</span>
+                    <span>View Details</span>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-4 w-4 transform group-hover:translate-x-1 transition-transform"
@@ -167,7 +165,7 @@ export default function ProjectsPage() {
 
                 {/* Hover Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-r from-accent-blue/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-lg pointer-events-none" />
-              </a>
+              </Link>
             </motion.div>
           ))}
         </div>

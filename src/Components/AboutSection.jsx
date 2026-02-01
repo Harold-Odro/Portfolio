@@ -15,9 +15,9 @@ export default function AboutSection() {
 
   const skillCards = [
     {
-      category: "Web Development",
-      description: "Full-stack development with modern frameworks",
-      technologies: ["React", "Laravel", "Node.js", "Tailwind CSS"],
+      category: "Frontend Development",
+      description: "Building responsive, interactive user interfaces",
+      technologies: ["React", "Next.js", "Tailwind CSS", "Framer Motion"],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
@@ -26,26 +26,26 @@ export default function AboutSection() {
       projectSection: "web-projects"
     },
     {
-      category: "Python Development",
-      description: "Automation, scripting, and data processing",
-      technologies: ["Python", "Pandas", "NumPy", "Flask"],
+      category: "Full Stack Development",
+      description: "End-to-end application development and deployment",
+      technologies: ["Node.js", "APIs", "Databases", "Fly.io/Vercel"],
+      icon: (
+        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        </svg>
+      ),
+      projectSection: "web-projects"
+    },
+    {
+      category: "API Integration",
+      description: "Connecting applications with third-party services",
+      technologies: ["REST APIs", "TMDB API", "Fetch/Axios", "Data Handling"],
       icon: (
         <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
         </svg>
       ),
-      projectSection: "python-projects"
-    },
-    {
-      category: "Database & SQL",
-      description: "Database design, optimization, and analytics",
-      technologies: ["MySQL", "PostgreSQL", "SQLite", "MongoDB"],
-      icon: (
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" />
-        </svg>
-      ),
-      projectSection: "sql-projects"
+      projectSection: "web-projects"
     }
   ];
 

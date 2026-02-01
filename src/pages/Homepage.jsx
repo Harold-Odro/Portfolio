@@ -4,6 +4,7 @@ import Navbar from '../Components/Navbar';
 import HeroSection from '../Components/HeroSection';
 import AboutSection from '../Components/AboutSection';
 import Projects from '../Components/Projects';
+import ContactSection from '../Components/ContactSection';
 import Footer from '../Components/Footer';
 import ScrollToTop from '../Components/ScrollToTop';
 import { AnimatePresence, motion } from 'framer-motion';
@@ -53,6 +54,7 @@ export default function Homepage() {
             <HeroSection />
             <AboutSection />
             <Projects />
+            <ContactSection />
             <Footer />
           </main>
           <ScrollToTop />
